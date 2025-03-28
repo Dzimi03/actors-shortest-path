@@ -1,5 +1,6 @@
 import csv
 import sys
+from os import remove
 
 from util import Node, StackFrontier, QueueFrontier
 
@@ -92,8 +93,25 @@ def shortest_path(source, target):
     If no possible path, returns None.
     """
 
-    # TODO
-    raise NotImplementedError
+    # Kolejka BFS
+    frontier = QueueFrontier()
+    frontier.add(Node(state=source, parent=None, action=None))
+
+    # Zbiór odwiedzonych aktorów
+    explored = set()
+
+    while not frontier.empty():
+        node = frontier.remove()
+        if node.state == target:
+            path = []
+            while node.parent is not None:
+                path.append((node.state, node.action))
+                node = node.parent
+            path.reverse()
+            return path
+        explored.add(node.state)
+
+
 
 
 def person_id_for_name(name):
